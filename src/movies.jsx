@@ -11,9 +11,11 @@ class Movies extends Component {
 
     renderCount() {
 
+        const { count } = this.state;
+
         let countString = `No movies in the database`;
-        if (this.state.count > 0) {
-            countString = 'Showing ' + this.state.count + ' movies in the database';
+        if (count > 0) {
+            countString = 'Showing ' + count + ' movies in the database';
         }
 
         return countString;
@@ -27,10 +29,10 @@ class Movies extends Component {
         await deleteMovie(movieId)
         delete this.state.movies.movieId;
 
-        const updatedMovies = this.state.movies;
+        const { movies } = this.state;
 
-        this.setState({ movies: updatedMovies })
-        this.setState({ count: updatedMovies.length })
+        this.setState({ movies })
+        this.setState({ count: movies.length })
 
     }
 
