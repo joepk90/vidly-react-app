@@ -58,7 +58,7 @@ class Movies extends Component {
         return (
             <React.Fragment>
 
-                <p className="text-left pt-3">{this.renderCount()}</p>
+                <p className="text-left">{this.renderCount()}</p>
 
                 <table className="table">
                     <thead>
