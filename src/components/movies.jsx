@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getMovies, deleteMovie } from '../services/fakeMovieService';
+import Like from "./common/like";
 
 class Movies extends Component {
     state = {
@@ -36,6 +37,22 @@ class Movies extends Component {
 
     }
 
+    handleLike = (movie) => {
+        let movies = [...this.state.movies];
+
+        let index = movies.indexOf(movie);
+
+        movies[index] = { ...movies[index] }; // why are we cloning the object here? - why not just use the object in the state?
+
+        if (!movies[index].liked) {
+            movies[index].liked = true;
+        } else {
+            movies[index].liked = false;
+        }
+
+        this.setState({ movies });
+    };
+
     renderRow() {
 
         return this.state.movies.map(movie => {
@@ -46,6 +63,9 @@ class Movies extends Component {
                     <td key="{movie.genre}">{movie.genre.name}</td>
                     <td key="{movie.numberInStock}">{movie.numberInStock}</td>
                     <td key="{movie.dailyRentalRate}">{movie.dailyRentalRate}</td>
+                    <td>
+                        <Like liked={movie.liked} onClick={() => this.handleLike(movie)} />
+                    </td>
                     <td>
                         <button id={movie._id} onClick={this.handleDelete} type="button" className="btn btn-danger">Delete</button>
                     </td>
@@ -67,6 +87,7 @@ class Movies extends Component {
                             <th scope="col">Genre</th>
                             <th scope="col">Stock</th>
                             <th scope="col">Rate</th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
