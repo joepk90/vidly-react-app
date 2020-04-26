@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 class Pagination extends Component {
@@ -7,8 +8,10 @@ class Pagination extends Component {
 
     pageItemClasses = (page) => {
 
+        const { currentPage } = this.props;
+
         let classList = 'page-item';
-        if (this.props.currentPage === page) {
+        if (currentPage === page) {
             classList += ' active';
         }
 
@@ -18,7 +21,7 @@ class Pagination extends Component {
 
     renderPaginationItems = () => {
 
-        const { itemsCount, pageSize, currentPage, onPageChange } = this.props;
+        const { itemsCount, pageSize, onPageChange } = this.props;
 
         const pagesCount = Math.ceil(itemsCount / pageSize);
         const pages = _.range(1, pagesCount + 1)
@@ -46,5 +49,12 @@ class Pagination extends Component {
         );
     }
 }
+
+Pagination.propTypes = {
+    itemsCount: PropTypes.number.isRequired,
+    pageSize: PropTypes.number.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    onPageChange: PropTypes.func.isRequired
+};
 
 export default Pagination;
