@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getMovies, deleteMovie } from '../services/fakeMovieService';
 import Like from "./common/like";
+import { paginate } from "../utils/paginate";
 import Pagination from "./common/pagination";
 
 class Movies extends Component {
@@ -66,7 +67,11 @@ class Movies extends Component {
 
     renderRow() {
 
-        return this.state.movies.map(movie => {
+        const { pageSize, currentPage, movies: allmovies } = this.state;
+
+        const movies = paginate(allmovies, currentPage, pageSize);
+
+        return movies.map(movie => {
 
             return (
                 <tr key={movie._id}>
