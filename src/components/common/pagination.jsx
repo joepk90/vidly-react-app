@@ -5,19 +5,20 @@ class Pagination extends Component {
 
     state = {}
 
-    renderPaginationItem = (index) => {
+    pageItemClasses = (page) => {
 
-        return (
-            <li key={index} className="page-item">
-                <a className="page-link" onClick={() => this.props.onClick()} href="#">{index}</a>
-            </li>
-        );
+        let classList = 'page-item';
+        if (this.props.currentPage === page) {
+            classList += ' active';
+        }
 
-    };
+        return classList;
+
+    }
 
     renderPaginationItems = () => {
 
-        const { itemsCount, pageSize } = this.props;
+        const { itemsCount, pageSize, currentPage, onPageChange } = this.props;
 
         const pagesCount = Math.ceil(itemsCount / pageSize);
         const pages = _.range(1, pagesCount + 1)
@@ -25,12 +26,9 @@ class Pagination extends Component {
         if (pagesCount === 1) return null;
 
         return pages.map((page) => {
-
-            console.log(this);
-
             return (
-                <li key={page} className="page-item">
-                    <a className="page-link" onClick={() => this.props.onPageChange(page)}>{page}</a>
+                <li key={page} className={this.pageItemClasses(page)}>
+                    <a className="page-link" onClick={() => onPageChange(page)}>{page}</a>
                 </li>
             );
         })

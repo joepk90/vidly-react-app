@@ -8,6 +8,7 @@ class Movies extends Component {
         movies: getMovies(),
         count: getMovies().length,
         pageSize: 4,
+        currentPage: 1
     }
 
     componentDidMount() { }
@@ -55,11 +56,12 @@ class Movies extends Component {
         this.setState({ movies });
     };
 
-    handlePageChange = e => {
+    handlePageChange = page => {
 
-        // e.preventDefault();
+        // check if page is a number
 
-        console.log(e)
+        this.setState({ currentPage: page })
+
     }
 
     renderRow() {
@@ -85,7 +87,7 @@ class Movies extends Component {
 
     render() {
 
-        const { count } = this.state;
+        const { count, pageSize, currentPage } = this.state;
 
         return (
             <React.Fragment>
@@ -110,7 +112,12 @@ class Movies extends Component {
                     </tbody>
 
                 </table>
-                <Pagination itemsCount={count} pageSize={this.state.pageSize} onPageChange={this.handlePageChange} />
+                <Pagination
+                    itemsCount={count}
+                    pageSize={pageSize}
+                    currentPage={currentPage}
+                    onPageChange={this.handlePageChange}
+                />
             </React.Fragment>
         );
     }
