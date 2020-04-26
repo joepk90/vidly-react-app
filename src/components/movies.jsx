@@ -3,6 +3,7 @@ import { getMovies, deleteMovie } from '../services/fakeMovieService';
 import { getGenres } from '../services/fakeGenreService';
 import Like from "./common/like";
 import { paginate } from "../utils/paginate";
+import { filter } from "../utils/filter";
 import Pagination from "./common/pagination";
 import Filters from "./common/filters";
 
@@ -77,9 +78,12 @@ class Movies extends Component {
 
     renderRow() {
 
-        const { pageSize, currentPage, movies: allmovies } = this.state;
+        const { pageSize, currentPage, movies: allmovies, currentFilterId } = this.state;
 
-        const movies = paginate(allmovies, currentPage, pageSize);
+        let movies = paginate(allmovies, currentPage, pageSize);
+        if (currentFilterId !== 'all') {
+            movies = filter(movies, currentFilterId);
+        }
 
         return movies.map(movie => {
 

@@ -21,7 +21,12 @@ class Filters extends Component {
         const filters = [{ _id: 'all', name: 'All Genres' }, ...queriedFilters];
 
         return filters.map((filter) => {
-            return <li key={filter._id} className={this.renderFilterClasses(filter)} onClick={() => onFilterChange(filter)}>{filter.name}</li>;
+            return <li
+                key={filter._id}
+                className={this.renderFilterClasses(filter)}
+                onClick={() => onFilterChange(filter)}
+                style={{ cursor: 'pointer' }}
+            >{filter.name}</li>;
         })
     }
 
