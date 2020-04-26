@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { getMovies, deleteMovie } from '../services/fakeMovieService';
+import { getGenres } from '../services/fakeGenreService';
 import Like from "./common/like";
 import { paginate } from "../utils/paginate";
 import Pagination from "./common/pagination";
+import Filters from "./common/filters";
 
 class Movies extends Component {
     state = {
         movies: getMovies(),
+        genres: getGenres(),
         count: getMovies().length,
         pageSize: 4,
-        currentPage: 1
+        currentPage: 1,
+        currentFilterId: 'all',
     }
 
     componentDidMount() { }
@@ -65,6 +69,12 @@ class Movies extends Component {
 
     }
 
+    handleFilterChange = filter => {
+
+        this.setState({ currentFilterId: filter._id })
+
+    }
+
     renderRow() {
 
         const { pageSize, currentPage, movies: allmovies } = this.state;
@@ -92,37 +102,50 @@ class Movies extends Component {
 
     render() {
 
-        const { count, pageSize, currentPage } = this.state;
+        const { count, pageSize, currentPage, genres, currentFilterId } = this.state;
 
         return (
             <React.Fragment>
+                <div className="row">
 
-                <p className="text-left">{this.renderCount()}</p>
+                    <div className="col-2">
+                        <Filters
+                            filters={genres}
+                            onFilterChange={this.handleFilterChange}
+                            currentFilterId={currentFilterId}
+                        />
+                    </div>
 
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Genre</th>
-                            <th scope="col">Stock</th>
-                            <th scope="col">Rate</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <div className="col-10">
+                        <p className="text-left">{this.renderCount()}</p>
 
-                        {this.renderRow()}
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Genre</th>
+                                    <th scope="col">Stock</th>
+                                    <th scope="col">Rate</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                    </tbody>
+                                {this.renderRow()}
 
-                </table>
-                <Pagination
-                    itemsCount={count}
-                    pageSize={pageSize}
-                    currentPage={currentPage}
-                    onPageChange={this.handlePageChange}
-                />
+                            </tbody>
+
+                        </table>
+
+                        <Pagination
+                            itemsCount={count}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChange={this.handlePageChange}
+                        />
+                    </div>
+                </div>
             </React.Fragment>
         );
     }
