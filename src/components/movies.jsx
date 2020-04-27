@@ -26,7 +26,7 @@ class Movies extends Component {
 
     handleDelete = async movie => {
 
-        const movieId = movie.target.id;
+        const movieId = movie._id;
 
         await deleteMovie(movieId)
         delete this.state.movies.movieId;
