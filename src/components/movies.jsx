@@ -97,8 +97,8 @@ class Movies extends Component {
                     />
                 </div>
 
-                <div className="col-10">
-                    <p className="text-left">Showing {filtered.length} movies in the database</p>
+                <div className="col-10 text-left">
+                    <p>Showing {filtered.length} movies in the database</p>
 
                     <MoviesTable
                         movies={movies}
