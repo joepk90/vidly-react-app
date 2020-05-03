@@ -7,7 +7,27 @@ class LoginForm extends Component {
         account: {
             username: '',
             password: ''
+        },
+        errors: {}
+
+    }
+
+    validate = () => {
+
+        const errors = {};
+
+        const { account } = this.state;
+
+        if (account.username.trim() === '') {
+            errors.username = 'Username is Required';
         }
+
+        if (account.password.trim() === '') {
+            errors.password = 'Password is Required';
+        }
+
+        // checks if the object is empty
+        return Object.keys(errors).length === 0 ? null : errors;
 
     }
 
@@ -18,11 +38,19 @@ class LoginForm extends Component {
         account[input.name] = input.value;
 
         this.setState({ account });
-
     }
 
     handleSubmit = e => {
+
         e.preventDefault();
+
+        const errors = this.validate();
+
+        console.log(errors);
+
+        this.setState((errors));
+
+        if (this.errors) return;
     }
 
     render() {
