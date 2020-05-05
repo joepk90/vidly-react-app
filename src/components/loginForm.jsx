@@ -23,7 +23,7 @@ class LoginForm extends Component {
         const options = { abortEarly: false };
         const { error } = Joi.validate(this.state.account, this.schema, options);
 
-        if (!error) return null;
+        if (!error) return null; // response also used to disable the button
 
         const errors = {};
 
@@ -99,7 +99,8 @@ class LoginForm extends Component {
                         onChange={this.handleChange}
                         error={errors.password}
                     />
-                    <button className="btn btn-primary">Login</button>
+                    <button disabled={this.validate()}
+                        className="btn btn-primary">Login</button>
                 </form>
 
             </div>
