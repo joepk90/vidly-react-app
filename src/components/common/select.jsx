@@ -12,10 +12,8 @@ const Select = ({ name, label, options, error, ...rest }) => {
                 name={name}
                 {...rest}
             >
-                <option defaultValue value="">Choose...</option>
-
                 {options.map((option) => {
-                    return <option key={option._id} value={option._id}>{option.name}</option>
+                    return <option key={option.value} value={option.value}>{option.name}</option>
                 })}
 
             </select>

@@ -1,6 +1,8 @@
 import React from 'react';
 import Joi from 'joi-browser';
 import Form from './common/form';
+import { getMovie } from '../services/fakeMovieService';
+import { getGenres } from '../services/fakeGenreService';
 
 class MovieForm extends Form {
 
@@ -22,6 +24,25 @@ class MovieForm extends Form {
         dailyRentalRate: Joi.number().min(0).max(10).required().label('Rate'),
     };
 
+    componentDidMount() {
+
+        const { id } = this.props.match.params;
+
+        if (id === 'new') return;
+
+        const { numberInStock, genre, title, dailyRentalRate } = getMovie(id);
+
+        const data = {
+            title,
+            dailyRentalRate,
+            genre: genre._id,
+            numberInStock
+        }
+
+        this.setState({ data });
+
+    }
+
     doSubmit = e => {
 
         console.log('test');
@@ -30,27 +51,30 @@ class MovieForm extends Form {
 
     renderTitle() {
 
-        const { id } = this.props.match.params;
+        let formTitle = 'Movie Form';
 
-        let title = `Movie - ${id}`;
+        const { title } = this.state.data;
 
-        if (id === 'new') {
-            title = 'Movie Form';
+        if (title !== '') {
+            formTitle = formTitle + ': ' + title;
         }
 
         return (
-            <h1>{title}</h1>
+            <h1>{formTitle}</h1>
         );
 
     }
 
     render() {
 
-        const genres = [
-            { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
-            { _id: "5b21ca3eeb7f6fbccd471814", name: "Comedy" },
-            { _id: "5b21ca3eeb7f6fbccd471820", name: "Thriller" }
-        ];
+        const genres = getGenres();
+        const genreOptions = genres.map(genre => {
+            return { value: genre._id, name: genre.name }
+        })
+
+        const firstOption = { value: '', name: 'Choose...' }
+        const options = [firstOption, ...genreOptions]
+
 
         return (
             <div>
@@ -59,7 +83,7 @@ class MovieForm extends Form {
 
                 <form onSubmit={this.handleSubmit}>
                     {this.renderInput('title', 'Title')}
-                    {this.renderSelect('genre', 'Genre', genres)}
+                    {this.renderSelect('genre', 'Genre', options)}
                     {this.renderInput('numberInStock', 'Number In Stock', 'number')}
                     {this.renderInput('dailyRentalRate', 'Rate', 'number')}
 
