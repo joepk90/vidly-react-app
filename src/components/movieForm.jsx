@@ -46,6 +46,12 @@ class MovieForm extends Form {
 
     render() {
 
+        const genres = [
+            { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
+            { _id: "5b21ca3eeb7f6fbccd471814", name: "Comedy" },
+            { _id: "5b21ca3eeb7f6fbccd471820", name: "Thriller" }
+        ];
+
         return (
             <div>
 
@@ -53,7 +59,7 @@ class MovieForm extends Form {
 
                 <form onSubmit={this.handleSubmit}>
                     {this.renderInput('title', 'Title')}
-                    {this.renderInput('genre', 'Genre')}
+                    {this.renderSelect('genre', 'Genre', genres)}
                     {this.renderInput('numberInStock', 'Number In Stock', 'number')}
                     {this.renderInput('rate', 'Rate', 'number')}
 
