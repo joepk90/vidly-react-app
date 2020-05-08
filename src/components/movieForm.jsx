@@ -9,7 +9,7 @@ class MovieForm extends Form {
             title: '',
             genre: '',
             numberInStock: '',
-            rate: '',
+            dailyRentalRate: '',
         },
         errors: {}
 
@@ -19,7 +19,7 @@ class MovieForm extends Form {
         title: Joi.string().required().label('Title'),
         genre: Joi.string().required().label('Genre'),
         numberInStock: Joi.number().min(0).max(100).required().label('Number In Stock'),
-        rate: Joi.number().min(0).max(10).required().label('Rate'),
+        dailyRentalRate: Joi.number().min(0).max(10).required().label('Rate'),
     };
 
     doSubmit = e => {
@@ -61,7 +61,7 @@ class MovieForm extends Form {
                     {this.renderInput('title', 'Title')}
                     {this.renderSelect('genre', 'Genre', genres)}
                     {this.renderInput('numberInStock', 'Number In Stock', 'number')}
-                    {this.renderInput('rate', 'Rate', 'number')}
+                    {this.renderInput('dailyRentalRate', 'Rate', 'number')}
 
                     {this.renderButton('Save')}
                 </form>
