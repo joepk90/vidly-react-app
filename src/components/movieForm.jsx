@@ -14,7 +14,7 @@ class MovieForm extends Form {
             dailyRentalRate: '',
         },
         errors: {},
-        genres: getGenres()
+        genres: []
 
     };
 
@@ -26,6 +26,9 @@ class MovieForm extends Form {
     };
 
     componentDidMount() {
+
+        const genres = getGenres();
+        this.setState({ genres });
 
         const { id } = this.props.match.params;
 
