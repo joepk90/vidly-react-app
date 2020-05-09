@@ -13,7 +13,8 @@ class MovieForm extends Form {
             numberInStock: '',
             dailyRentalRate: '',
         },
-        errors: {}
+        errors: {},
+        genres: getGenres()
 
     };
 
@@ -30,7 +31,11 @@ class MovieForm extends Form {
 
         if (id === 'new') return;
 
-        const { numberInStock, genre, title, dailyRentalRate } = getMovie(id);
+        const movie = getMovie(id);
+
+        if (!movie) return this.props.history.push('/not-found');
+
+        const { numberInStock, genre, title, dailyRentalRate } = movie;
 
         const data = {
             title,
@@ -67,7 +72,8 @@ class MovieForm extends Form {
 
     render() {
 
-        const genres = getGenres();
+        const { genres } = this.state;
+
         const genreOptions = genres.map(genre => {
             return { value: genre._id, name: genre.name }
         })
