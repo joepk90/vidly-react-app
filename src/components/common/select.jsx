@@ -7,7 +7,7 @@ const Select = ({ name, label, options, error, ...rest }) => {
         <div className="form-group">
             <label htmlFor={name}>{label}</label>
             <select
-                className="form-control custom-select"
+                className="form-control"
                 id={name}
                 name={name}
                 {...rest}
