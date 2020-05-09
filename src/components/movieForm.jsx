@@ -37,7 +37,7 @@ class MovieForm extends Form {
 
         const movie = getMovie(id);
 
-        if (!movie) return this.props.history.push('/not-found');
+        if (!movie) return this.props.history.replace('/not-found');
 
         const { numberInStock, genre, title, dailyRentalRate } = movie;
 
