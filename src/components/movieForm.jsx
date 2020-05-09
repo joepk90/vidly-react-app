@@ -9,7 +9,7 @@ class MovieForm extends Form {
     state = {
         data: {
             title: '',
-            genre: '',
+            genreId: '',
             numberInStock: '',
             dailyRentalRate: '',
         },
@@ -19,7 +19,7 @@ class MovieForm extends Form {
 
     schema = {
         title: Joi.string().required().label('Title'),
-        genre: Joi.string().required().label('Genre'),
+        genreId: Joi.string().required().label('Genre'),
         numberInStock: Joi.number().min(0).max(100).required().label('Number In Stock'),
         dailyRentalRate: Joi.number().min(0).max(10).required().label('Rate'),
     };
@@ -35,7 +35,7 @@ class MovieForm extends Form {
         const data = {
             title,
             dailyRentalRate,
-            genre: genre._id,
+            genreId: genre._id,
             numberInStock
         }
 
@@ -83,7 +83,7 @@ class MovieForm extends Form {
 
                 <form onSubmit={this.handleSubmit}>
                     {this.renderInput('title', 'Title')}
-                    {this.renderSelect('genre', 'Genre', options)}
+                    {this.renderSelect('genreId', 'Genre', options)}
                     {this.renderInput('numberInStock', 'Number In Stock', 'number')}
                     {this.renderInput('dailyRentalRate', 'Rate', 'number')}
 
