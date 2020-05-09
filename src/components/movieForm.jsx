@@ -1,7 +1,7 @@
 import React from 'react';
 import Joi from 'joi-browser';
 import Form from './common/form';
-import { getMovie } from '../services/fakeMovieService';
+import { getMovie, saveMovie, getMovies } from '../services/fakeMovieService';
 import { getGenres } from '../services/fakeGenreService';
 
 class MovieForm extends Form {
@@ -48,9 +48,20 @@ class MovieForm extends Form {
 
     }
 
-    doSubmit = e => {
+    doSubmit = () => {
 
-        console.log('test');
+        const { id } = this.props.match.params;
+        let { data } = this.state;
+
+        if (id !== 'new') {
+            data._id = id;
+        }
+
+        saveMovie(data);
+
+        // console.log(getMovies());
+
+        this.props.history.push('/movies');
 
     }
 
