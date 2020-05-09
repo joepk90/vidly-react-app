@@ -39,29 +39,27 @@ class MovieForm extends Form {
 
         if (!movie) return this.props.history.replace('/not-found');
 
-        const { numberInStock, genre, title, dailyRentalRate } = movie;
+        this.setState({ data: this.mapToViewModel(movie) });
 
-        const data = {
-            title,
-            dailyRentalRate,
-            genreId: genre._id,
-            numberInStock
+    }
+
+    mapToViewModel = (movie) => {
+
+        // maps data to the data structure of the current view (only mapping the required data)
+
+        return {
+            _id: movie._id,
+            title: movie.title,
+            genreId: movie.genre._id,
+            numberInStock: movie.numberInStock,
+            dailyRentalRate: movie.dailyRentalRate
         }
-
-        this.setState({ data });
 
     }
 
     doSubmit = () => {
 
-        const { id } = this.props.match.params;
-        let { data } = this.state;
-
-        if (id !== 'new') {
-            data._id = id;
-        }
-
-        saveMovie(data);
+        saveMovie(this.state.data);
 
         // console.log(getMovies());
 
