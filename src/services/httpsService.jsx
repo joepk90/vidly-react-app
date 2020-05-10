@@ -4,6 +4,7 @@ import logger from './logService';
 
 axios.interceptors.response.use(null, error => {
 
+    // TODO why am I receiving a 500 status, not a 404? 
     const expectedError = error.response && error.response.status >= 400 && error.response.status < 500;
 
     // unexpected errors (erros that shouldn't occur: network down, server down, database down, bug)
