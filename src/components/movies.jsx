@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { getMovies, deleteMovie } from '../services/fakeMovieService';
-import { getGenres } from '../services/fakeGenreService';
+import { getMovies, deleteMovie } from '../services/movieService';
+import { getGenres } from '../services/genreService';
 import { paginate } from "../utils/paginate";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
@@ -13,7 +13,7 @@ class Movies extends Component {
     state = {
         movies: [],
         genres: [],
-        count: getMovies().length,
+        count: 0,
         pageSize: 4,
         currentPage: 1,
         selectedGenre: 'all',
@@ -21,11 +21,14 @@ class Movies extends Component {
         searchQuery: ''
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 
-        const genres = [{ _id: '', name: 'All Genres' }, ...getGenres()];
+        const genres = await getGenres();
+        const movies = await getMovies();
 
-        this.setState({ movies: getMovies(), genres });
+        const modifiedGenres = [{ _id: '', name: 'All Genres' }, ...genres];
+
+        this.setState({ movies, genres: modifiedGenres, count: movies.length });
 
     }
 
