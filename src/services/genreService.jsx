@@ -1,14 +1,10 @@
-import axios from 'axios';
+import http from './httpsService';
 
 const apiService = 'http://localhost:3000/api/';
 
-export async function getGenres() {
+export function getGenres() {
 
-    const { data } = await axios.get(apiService + 'genres');
-
-    console.log(data);
-
-    return data;
+    return http.get(apiService + 'genres');
 
     // return genres.filter(g => g);
 }

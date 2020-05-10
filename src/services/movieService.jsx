@@ -1,14 +1,10 @@
-import axios from 'axios';
+import http from './httpsService';
 
 const apiService = 'http://localhost:3000/api/';
 
-export async function getMovies() {
+export function getMovies() {
 
-    const { data } = await axios.get(apiService + 'movies');
-
-    console.log(data);
-
-    return data;
+    return http.get(apiService + 'movies');
 }
 
 // export function getMovie(id) {
@@ -34,7 +30,7 @@ export async function getMovies() {
 // }
 
 export async function deleteMovie(id) {
-    // let movieInDb = movies.find(m => m._id === id);
-    // movies.splice(movies.indexOf(movieInDb), 1);
-    // return movieInDb;
+
+    return http.delete(apiService + id);
+
 }

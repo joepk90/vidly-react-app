@@ -23,8 +23,8 @@ class Movies extends Component {
 
     async componentDidMount() {
 
-        const genres = await getGenres();
-        const movies = await getMovies();
+        const { data: genres } = await getGenres();
+        const { data: movies } = await getMovies();
 
         const modifiedGenres = [{ _id: '', name: 'All Genres' }, ...genres];
 
