@@ -1,10 +1,8 @@
 import http from './httpsService';
+import { apiUrl } from '../config.json';
 
-const apiService = 'http://localhost:3000/api/';
+const apiEndpoint = apiUrl + "/genres";
 
 export function getGenres() {
-
-    return http.get(apiService + 'genres');
-
-    // return genres.filter(g => g);
+    return http.get(apiEndpoint);
 }

@@ -1,10 +1,11 @@
 import http from './httpsService';
+import { apiUrl } from '../config.json';
 
-const apiService = 'http://localhost:3000/api/';
+const apiEndpoint = apiUrl + "/movies";
 
 export function getMovies() {
 
-    return http.get(apiService + 'movies');
+    return http.get(apiEndpoint);
 }
 
 // export function getMovie(id) {
@@ -31,6 +32,6 @@ export function getMovies() {
 
 export async function deleteMovie(id) {
 
-    return http.delete(apiService + 'movies/' + id);
+    return http.delete(apiEndpoint);
 
 }
