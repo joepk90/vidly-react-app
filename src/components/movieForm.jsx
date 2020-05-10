@@ -47,12 +47,15 @@ class MovieForm extends Form {
 
         } catch (ex) {
 
-            this.props.history.replace('/not-found');
+            // TODO why am I receiving a 500 status, not a 404? 
+            if (ex.response && (ex.response.status === 404 || ex.response.status === 500)) {
 
-            // TODO no reponse object given - more investigation provided
-            // if (ex.response && ex.response.status === 404) {
-            //     this.props.history.replace('/not-found');
-            // }
+                // console.error(ex);
+                // console.error(ex.response);
+                // console.error(ex.response.status);
+
+                this.props.history.replace('/not-found');
+            }
         }
     }
 
@@ -82,7 +85,9 @@ class MovieForm extends Form {
 
         const { data } = this.state;
 
-        await saveMovie(data);
+        const test = await saveMovie(data);
+
+        console.log(test);
 
         this.props.history.push('/movies');
 
