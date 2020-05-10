@@ -42,7 +42,7 @@ class Movies extends Component {
         this.setState({ movies, count: movies.length })
 
         try {
-            const test = await deleteMovie(movie._id);
+            await deleteMovie(movie._id);
         } catch (ex) {
 
             // TODO not yet working - I think there is an issue with the server config:

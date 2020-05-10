@@ -1,8 +1,8 @@
 import React from 'react';
 import Joi from 'joi-browser';
 import Form from './common/form';
-import { getMovie, saveMovie, getMovies } from '../services/fakeMovieService';
-import { getGenres } from '../services/fakeGenreService';
+import { getMovie, saveMovie, updateMovie, getMovies } from '../services/movieService';
+import { getGenres } from '../services/genreService';
 
 class MovieForm extends Form {
 
@@ -26,16 +26,17 @@ class MovieForm extends Form {
         dailyRentalRate: Joi.number().min(0).max(10).required().label('Rate'),
     };
 
-    componentDidMount() {
+    async componentDidMount() {
 
-        const genres = getGenres();
-        this.setState({ genres });
+        const { data } = await getGenres();
+
+        this.setState({ genres: data });
 
         const { id } = this.props.match.params;
 
         if (id === 'new') return;
 
-        const movie = getMovie(id);
+        const { data: movie } = await getMovie(id);
 
         if (!movie) return this.props.history.replace('/not-found');
 
@@ -47,19 +48,34 @@ class MovieForm extends Form {
 
         // maps data to the data structure of the current view (only mapping the required data)
 
-        return {
-            _id: movie._id,
+        const mappedMovie = {
             title: movie.title,
             genreId: movie.genre._id,
             numberInStock: movie.numberInStock,
             dailyRentalRate: movie.dailyRentalRate
         }
 
+        if (movie._id) {
+            mappedMovie._id = movie._id
+        }
+
+        return mappedMovie;
+
     }
 
-    doSubmit = () => {
+    doSubmit = async () => {
 
-        saveMovie(this.state.data);
+        const { id } = this.props.match.params;
+
+        const { data } = this.state;
+
+        if (data._id) {
+            await updateMovie(data); // updating not yet working
+        } else {
+            await saveMovie(data);
+        }
+
+
 
         // console.log(getMovies());
 
