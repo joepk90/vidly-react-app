@@ -36,12 +36,18 @@ class MovieForm extends Form {
 
         if (id === 'new') return;
 
-        const { data: movie } = await getMovie(id);
+        try {
+            const { data: movie } = await getMovie(id);
+            this.setState({ data: this.mapToViewModel(movie) });
+        } catch (ex) {
 
-        if (!movie) return this.props.history.replace('/not-found');
+            this.props.history.replace('/not-found');
 
-        this.setState({ data: this.mapToViewModel(movie) });
-
+            // TODO no reponse object given - more investigation provided
+            // if (ex.response && ex.response.status === 404) {
+            //     this.props.history.replace('/not-found');
+            // }
+        }
     }
 
     mapToViewModel = (movie) => {
