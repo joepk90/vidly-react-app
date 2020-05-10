@@ -68,18 +68,13 @@ class MovieForm extends Form {
 
         // maps data to the data structure of the current view (only mapping the required data)
 
-        const mappedMovie = {
+        return {
+            _id: movie._id, // _id will be undefined if creating a new movie
             title: movie.title,
             genreId: movie.genre._id,
             numberInStock: movie.numberInStock,
             dailyRentalRate: movie.dailyRentalRate
         }
-
-        if (movie._id) {
-            mappedMovie._id = movie._id
-        }
-
-        return mappedMovie;
 
     }
 
