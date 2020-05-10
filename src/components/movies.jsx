@@ -49,8 +49,9 @@ class Movies extends Component {
             // - no response object provided + never reaches catch statement
             if (ex.response && ex.response.status === 404) {
                 toast.error('this movie does not exist');
-                this.setState({ movies: originalMovies });
             }
+
+            this.setState({ movies: originalMovies });
 
         }
 
