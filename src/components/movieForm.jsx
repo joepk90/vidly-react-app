@@ -1,13 +1,14 @@
 import React from 'react';
 import Joi from 'joi-browser';
 import Form from './common/form';
-import { getMovie, saveMovie, updateMovie, getMovies } from '../services/movieService';
+import { getMovie, saveMovie, updateMovie } from '../services/movieService';
 import { getGenres } from '../services/genreService';
 
 class MovieForm extends Form {
 
     state = {
         data: {
+            // _id: '#', id exists when editing
             title: '',
             genreId: '',
             numberInStock: '',
@@ -84,19 +85,9 @@ class MovieForm extends Form {
 
     doSubmit = async () => {
 
-        const { id } = this.props.match.params;
-
         const { data } = this.state;
 
-        if (data._id) {
-            await updateMovie(data); // updating not yet working
-        } else {
-            await saveMovie(data);
-        }
-
-
-
-        // console.log(getMovies());
+        await saveMovie(data);
 
         this.props.history.push('/movies');
 
