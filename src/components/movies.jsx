@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { getMovies, deleteMovie } from '../services/movieService';
 import { getGenres } from '../services/genreService';
@@ -34,15 +35,24 @@ class Movies extends Component {
 
     handleDelete = async movie => {
 
-        const movieId = movie._id;
+        const { movies: originalMovies } = this.state;
 
-        await deleteMovie(movieId)
-        delete this.state.movies.movieId;
+        const movies = originalMovies.filter(m => m._id !== movie._id);
 
-        const { movies } = this.state;
+        this.setState({ movies, count: movies.length })
 
-        this.setState({ movies })
-        this.setState({ count: movies.length })
+        try {
+            const test = await deleteMovie(movie._id);
+        } catch (ex) {
+
+            // TODO not yet working - I think there is an issue with the server config:
+            // - no response object provided + never reaches catch statement
+            if (ex.response && ex.response.status === 404) {
+                toast.error('this movie does not exist');
+                this.setState({ movies: originalMovies });
+            }
+
+        }
 
     }
 

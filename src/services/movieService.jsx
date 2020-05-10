@@ -31,6 +31,6 @@ export function getMovies() {
 
 export async function deleteMovie(id) {
 
-    return http.delete(apiService + id);
+    return http.delete(apiService + 'movies/' + id);
 
 }
