@@ -47,8 +47,7 @@ class MovieForm extends Form {
 
         } catch (ex) {
 
-            // TODO why am I receiving a 500 status, not a 404? 
-            if (ex.response && (ex.response.status === 404 || ex.response.status === 500)) {
+            if (ex.response && ex.response.status === 404) {
 
                 // console.error(ex);
                 // console.error(ex.response);
