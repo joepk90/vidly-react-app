@@ -1,10 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import logger from './logService';
-import auth from './authService';
-
-// sends authorised requests if user is logged in
-axios.defaults.headers.common['x-auth-token'] = auth.getJwt();
 
 axios.interceptors.response.use(null, error => {
 
@@ -24,11 +20,18 @@ axios.interceptors.response.use(null, error => {
 
 });
 
+// set jwt function handled in here to remove bi-directional dependancies
+// authService is reliant on httpService. authService shouldn't also be reliant on httpService
+function setJwt(jwt) {
+    axios.defaults.headers.common['x-auth-token'] = jwt;
+}
+
+
 export default {
 
     get: axios.get,
     post: axios.post,
     put: axios.put,
     delete: axios.delete,
-
+    setJwt
 }
