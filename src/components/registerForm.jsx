@@ -29,7 +29,11 @@ class RegisterForm extends Form {
 
             localStorage.setItem('token', response.headers['x-auth-token']);
 
-            this.props.history.push('/');
+            // force full page reload to run componentDidMount method in App component
+            // this updates the user information and changes the navbar links
+            // TODO make thisi work without full page reload
+            window.location = '/';
+            // this.props.history.push('/');
 
         } catch (ex) {
 
