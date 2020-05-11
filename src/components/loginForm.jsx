@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
 import Form from './common/form';
-import { login } from '../services/authService';
+import auth from '../services/authService';
 
 class LoginForm extends Form {
 
@@ -25,9 +25,7 @@ class LoginForm extends Form {
 
             const { data } = this.state;
 
-            const { data: jwt } = await login(data.username, data.password);
-
-            localStorage.setItem("token", jwt);
+            await auth.login(data.username, data.password);
 
             // force full page reload to run componentDidMount method in App component
             // this updates the user information and changes the navbar links

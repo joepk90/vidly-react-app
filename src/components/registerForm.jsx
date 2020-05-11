@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Joi from 'joi-browser';
 import Form from './common/form';
 import * as userService from '../services/userService'
+import auth from '../services/authService'
 
 class RegisterForm extends Form {
 
@@ -27,7 +28,7 @@ class RegisterForm extends Form {
 
             const response = await userService.register(this.state.data);
 
-            localStorage.setItem('token', response.headers['x-auth-token']);
+            auth.loginWithJwt(response.headers['x-auth-token'])
 
             // force full page reload to run componentDidMount method in App component
             // this updates the user information and changes the navbar links
