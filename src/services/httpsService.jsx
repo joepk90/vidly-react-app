@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import logger from './logService';
+import auth from './authService';
+
+// sends authorised requests if user is logged in
+axios.defaults.headers.common['x-auth-token'] = auth.getJwt();
 
 axios.interceptors.response.use(null, error => {
 

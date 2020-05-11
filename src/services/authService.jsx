@@ -18,11 +18,15 @@ export function logout() {
     localStorage.removeItem(tokenKey);
 }
 
+export function getJwt() {
+    return localStorage.getItem(tokenKey);
+}
+
 export function getCurrentUser() {
 
     try {
 
-        const jwt = localStorage.getItem(tokenKey);
+        const jwt = getJwt();
 
         return jwtDecode(jwt);
 
@@ -36,5 +40,6 @@ export default {
     login,
     loginWithJwt,
     logout,
-    getCurrentUser
+    getCurrentUser,
+    getJwt
 }
