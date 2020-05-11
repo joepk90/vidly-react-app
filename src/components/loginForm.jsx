@@ -27,7 +27,7 @@ class LoginForm extends Form {
 
             const { data: jwt } = await login(data.username, data.password);
 
-            localStorage.setItem("token:", jwt);
+            localStorage.setItem("token", jwt);
 
             // force full page reload to run componentDidMount method in App component
             // this updates the user information and changes the navbar links
