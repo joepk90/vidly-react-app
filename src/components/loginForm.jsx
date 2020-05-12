@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Joi from 'joi-browser';
+import { Redirect } from 'react-router-dom';
 import Form from './common/form';
 import auth from '../services/authService';
 
@@ -50,6 +51,8 @@ class LoginForm extends Form {
     }
 
     render() {
+
+        if (auth.getCurrentUser()) return <Redirect to='/' />;
 
         return (
             <div>
