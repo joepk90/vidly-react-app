@@ -27,10 +27,12 @@ class LoginForm extends Form {
 
             await auth.login(data.username, data.password);
 
+            const { state } = this.props.location
+
             // force full page reload to run componentDidMount method in App component
             // this updates the user information and changes the navbar links
             // TODO make thisi work without full page reload
-            window.location = '/';
+            window.location = state ? state.from.pathname : '/';
             // this.props.history.push('/');
 
         } catch (ex) {
