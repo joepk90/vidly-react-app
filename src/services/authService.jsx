@@ -1,8 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import http from './httpsService';
-import { apiUrl } from '../config.json';
 
-const apiEndpoint = apiUrl + "/auth";
+const apiEndpoint = "/auth";
 const tokenKey = "token";
 
 // set jwt function handled in http component to remove bi-directional dependancies
