@@ -15,6 +15,7 @@ import LoginForm from './components/loginForm';
 import RegisterForm from './components/registerForm';
 import Logout from './components/logout';
 import auth from './services/authService';
+import ProtectedRoute from './components/common/protectedRoute';
 
 class App extends Component {
   state = {}
@@ -37,7 +38,9 @@ class App extends Component {
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />
             <Route path="/register" component={RegisterForm} />
-            <Route path="/movies/:id" component={MovieForm} />
+            <ProtectedRoute path="/movies/:id"
+              component={MovieForm}
+            />
             <Route path="/movies" render={props => <Movies {...props} user={user} />} />
             <Route path="/customers" component={Customers} />
             <Route path="/rentals" component={Rentals} />
