@@ -9,6 +9,7 @@ import NavBar from './components/navbar'
 import MovieForm from './components/movieForm';
 import Movies from './components/movies';
 import Rentals from './components/rentals';
+import UserForm from './components/userForm';
 import Users from './components/users';
 import NotFound from './components/notFound';
 import LoginForm from './components/loginForm';
@@ -42,6 +43,9 @@ class App extends Component {
               component={MovieForm}
             />
             <Route path="/movies" render={props => <Movies {...props} user={user} />} />
+            <ProtectedRoute path="/users/:id"
+              component={UserForm}
+            />
             <Route path="/users" component={Users} />
             <Route path="/rentals" component={Rentals} />
             <Route path="/not-found" component={NotFound} />

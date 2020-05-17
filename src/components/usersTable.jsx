@@ -17,7 +17,7 @@ class MoviesTable extends Component {
     }
 
     columns = [
-        { path: 'title', label: 'Title', content: user => <Link to={`/movies/${user._id}`}>{user.name}</Link> },
+        { path: 'name', label: 'Name', content: user => <Link to={`/users/${user._id}`}>{user.name}</Link> },
         { path: 'email', label: 'Email' },
         { path: 'isAdmin', label: 'Administrator', content: user => user.isAdmin === true ? 'True' : 'False' },
     ];
