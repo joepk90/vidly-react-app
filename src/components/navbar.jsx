@@ -11,7 +11,7 @@ const NavBar = ({ user }) => {
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav">
                     <NavLink className="nav-item nav-link" to="/movies">Movies<span className="sr-only">(current)</span></NavLink>
-                    <NavLink className="nav-item nav-link" to="/customers">Customers</NavLink>
+                    <NavLink className="nav-item nav-link" to="/users">Users</NavLink>
                     <NavLink className="nav-item nav-link" to="/rentals">Rental</NavLink>
 
                     {!user && (
