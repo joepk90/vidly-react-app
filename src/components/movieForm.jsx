@@ -1,6 +1,6 @@
 import Joi from "joi";
 import Form from './common/form';
-import { getMovie, saveMovie, updateMovie } from '../services/movieService';
+import { getMovie, saveMovie } from '../services/movieService';
 import { getGenres } from '../services/genreService';
 
 class MovieForm extends Form {
