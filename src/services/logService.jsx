@@ -9,7 +9,9 @@ function log(error) {
     // Sentry.captureException(er ror);
 }
 
-export default {
+const logService = {
     init,
     log
 }
+
+export default logService;

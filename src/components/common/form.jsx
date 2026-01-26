@@ -1,114 +1,95 @@
-import React, { Component } from 'react';
-import Joi from 'joi-browser';
-import Input from './input';
-import Select from './select';
+import { Component } from "react";
+import Joi from "joi";
+import Input from "./input";
+import Select from "./select";
 
 class Form extends Component {
-    state = {
-        data: {},
-        errors: {}
+  state = {
+    data: {},
+    errors: {}
+  };
+
+  validate = () => {
+    const { error } = this.schema.validate(this.state.data, {
+      abortEarly: false
+    });
+
+    if (!error) return null;
+
+    const errors = {};
+    for (let item of error.details) {
+      errors[item.path[0]] = item.message; // path is now an array
     }
 
-    validate = () => {
+    return errors;
+  };
 
-        const options = { abortEarly: false };
-        const { error } = Joi.validate(this.state.data, this.schema, options);
+  validateProperty = ({ name, value }) => {
+    const fieldSchema = Joi.object({ [name]: this.schema.extract(name) });
+    const obj = { [name]: value };
+    const { error } = fieldSchema.validate(obj);
 
-        if (!error) return null; // response also used to disable the button
+    if (!error) return null;
+    return error.details[0].message;
+  };
 
-        const errors = {};
+  handleSubmit = (e) => {
+    e.preventDefault();
 
-        for (let item of error.details) {
-            errors[item.path] = item.message;
-        }
+    const errors = this.validate();
+    this.setState({ errors: errors || {} });
 
-        return errors;
+    this.doSubmit();
+  };
 
-    }
+  handleChange = ({ currentTarget: input }) => {
+    const errors = { ...this.state.errors };
+    const errorMessage = this.validateProperty(input);
 
-    validateProperty = ({ name, value }) => {
+    if (errorMessage) errors[input.name] = errorMessage;
+    else delete errors[input.name];
 
-        const obj = { [name]: value };
+    const data = { ...this.state.data };
+    data[input.name] = input.value;
 
-        const schema = { [name]: this.schema[name] };
-        const { error } = Joi.validate(obj, schema);
+    this.setState({ data, errors });
+  };
 
-        if (!error) return null;
+  renderButton(label) {
+    return (
+      <button disabled={this.validate()} className="btn btn-primary">
+        {label}
+      </button>
+    );
+  }
 
-        return error.details[0].message;
+  renderInput(name, label, type = "text") {
+    const { data, errors } = this.state;
+    return (
+      <Input
+        type={type}
+        name={name}
+        label={label}
+        value={data[name]}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  }
 
-    }
-
-    handleSubmit = e => {
-
-        e.preventDefault();
-
-        const errors = this.validate();
-
-        this.setState({ errors: errors || {} }); // TODO make validate() return empty object...
-
-        this.doSubmit();
-    }
-
-
-    handleChange = ({ currentTarget: input }) => {
-
-        const errors = { ...this.state.errors };
-
-        const errorMessage = this.validateProperty(input);
-
-        if (errorMessage) {
-            errors[input.name] = errorMessage
-        } else {
-            delete errors[input.name];
-        }
-
-        const data = { ...this.state.data };
-
-        data[input.name] = input.value;
-
-        this.setState({ data, errors });
-    }
-
-    renderButton(label) {
-        return (
-            <button disabled={this.validate()}
-                className="btn btn-primary">{label}</button>
-        )
-    }
-
-    renderInput(name, label, type = 'text') {
-
-        const { data, errors } = this.state;
-
-        return (
-            <Input
-                type={type}
-                name={name}
-                label={label}
-                value={data[name]}
-                onChange={this.handleChange}
-                error={errors[name]}
-            />
-        );
-    }
-
-    renderSelect(name, label, options) {
-
-        const { data, errors } = this.state;
-
-        return (
-            <Select
-                options={options}
-                name={name}
-                label={label}
-                value={data[name]}
-                onChange={this.handleChange}
-                error={errors[name]}
-            />
-        );
-    }
-
+  renderSelect(name, label, options) {
+    const { data, errors } = this.state;
+    return (
+      <Select
+        options={options}
+        name={name}
+        label={label}
+        value={data[name]}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  }
 }
 
 export default Form;
