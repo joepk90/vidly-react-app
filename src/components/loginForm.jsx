@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Joi from 'joi-browser';
+import Joi from "joi";
 import { Redirect } from 'react-router-dom';
 import Form from './common/form';
 import auth from '../services/authService';
