@@ -1,4 +1,3 @@
-import React from 'react';
 import Joi from "joi";
 import Form from './common/form';
 import { getMovie, saveMovie, updateMovie } from '../services/movieService';

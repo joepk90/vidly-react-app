@@ -1,8 +1,6 @@
-import React from 'react';
 import Joi from "joi";
 import Form from './common/form';
 import { getUser } from '../services/userService';
-import { getGenres } from '../services/genreService';
 
 class UserForm extends Form {
 

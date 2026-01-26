@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import Joi from "joi";
 import { Navigate } from "react-router-dom";
 import Form from "./common/form";
