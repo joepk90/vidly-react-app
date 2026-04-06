@@ -33,7 +33,7 @@
     ]
   },
   "devDependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.1.1",
     "font-awesome": "^4.7.0",
     "joi-browser": "^13.4.0",
